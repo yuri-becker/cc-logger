@@ -1,0 +1,16 @@
+[package]
+name = "cc-logger"
+version = "1.0.0"
+edition = "2021"
+
+[[bin]]
+name = "cc-logger"
+
+[dependencies]
+fantoccini = "0.21.2"
+tokio = { version = "1.41.0", features = ["macros", "process", "io-util", "rt-multi-thread"] }
+log = "0.4.22"
+dotenv = "0.15.0"
+pretty_env_logger = "0.5.0"
+rand = { version = "0.8.5", features = [] }
+serde_json = "1.0.132"
