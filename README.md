@@ -38,12 +38,13 @@ You can also set environment variables by creating a `.env.local` file when runn
 
 ### Environment Variables
 
-| Name                       | Description                                                           | Default                                   |
-|----------------------------|-----------------------------------------------------------------------|-------------------------------------------|
-| COMCAVE_USERNAME           | Your username                                                         | *required*                                |
-| COMCAVE_PASSWORD           | Your password                                                         | *required*                                |
-| COMCAVE_RANDOM_SLEEP_RANGE | Maximum amount of sleep time in minutes before running the automation | `0`, so no sleep                          |
-| COMCAVE_CHROMEDRIVER       | Chromedriver executable                                               | `chromedriver`                            |
-| COMCAVE_URL                | Base URL of the Comcave portal                                        | `https://portal.cc-student.com/index.php` |
-| COMCAVE_NO_SANDBOX         | Sets the `--no-sandbox` flag of Chromium                              | `false`, `true` in Docker                 |
-| COMCAVE_HEADLESS           | Sets the `--headless` flag of Chromium                                | `true`                                    |
+| Name                       | Description                                                                                               | Default                                   |
+|----------------------------|-----------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| COMCAVE_USERNAME           | Your username                                                                                             | *required*                                |
+| COMCAVE_PASSWORD           | Your password                                                                                             | *required*                                |
+| COMCAVE_RANDOM_SLEEP_RANGE | Maximum amount of sleep time in minutes before running the automation                                     | `0`, so no sleep                          |
+| COMCAVE_CHROMEDRIVER       | Chromedriver executable                                                                                   | `chromedriver`                            |
+| COMCAVE_URL                | Base URL of the Comcave portal                                                                            | `https://portal.cc-student.com/index.php` |
+| COMCAVE_NO_SANDBOX         | Sets the `--no-sandbox` flag of Chromium                                                                  | `false`, `true` in Docker                 |
+| COMCAVE_HEADLESS           | Sets the `--headless` flag of Chromium                                                                    | `true`                                    |
+| RUST_LOG                   | Logging Level, can be `trace`, `debug`, `info`, `warn` and `error`. `info` is recommended for production. | `debug`, `info` in Docker                 |

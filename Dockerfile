@@ -26,5 +26,6 @@ COPY Cargo.toml /cc-logger/Cargo.toml
 RUN . "$HOME/.cargo/env" && cd /cc-logger && cargo build --release
 RUN cp /cc-logger/target/release/cc-logger /usr/bin/cc-logger
 ENV COMCAVE_NO_SANDBOX=true
+ENV RUST_LOG=info
 
 WORKDIR /cc-logger
