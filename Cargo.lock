@@ -88,7 +88,7 @@ dependencies = [
 
 [[package]]
 name = "cc-logger"
-version = "1.0.0"
+version = "1.1.0"
 dependencies = [
  "dotenv",
  "fantoccini",

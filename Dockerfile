@@ -1,5 +1,5 @@
 FROM debian:stable-slim
-LABEL version="1.0.0" \
+LABEL version="1.1.0" \
     authors="Yuri Becker <hi@yuri.li>"
 
 RUN apt update && \

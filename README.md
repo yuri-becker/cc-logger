@@ -25,13 +25,13 @@ Obviously, this script is only meant to save you a few clicks and not to be run 
 ### Docker (recommended)
 
 ```sh
-docker run --env COMCAVE_USERNAME=username --env COMCAVE_PASSWORD=password yuribecker/cc-logger:latest cc-logger [come|leave]
+docker run --env COMCAVE_USERNAME=username --env COMCAVE_PASSWORD=password yuribecker/cc-logger:latest cc-logger [come|leave|info]
 ```
 
 ### From Source
 
 ```sh
-COMCAVE_USERNAME=username COMCAVE_PASSWORD=password cargo run [come|leave]
+COMCAVE_USERNAME=username COMCAVE_PASSWORD=password cargo run [come|leave|info]
 ```
 
 You can also set environment variables by creating a `.env.local` file when running from source.

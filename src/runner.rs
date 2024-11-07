@@ -1,6 +1,6 @@
 use crate::config::Config;
 use fantoccini::{Client, ClientBuilder, Locator};
-use log::{debug, trace};
+use log::{debug, info, trace};
 use std::error::Error;
 use std::time::Duration;
 use fantoccini::elements::Element;
@@ -10,7 +10,7 @@ use rand::Rng;
 use serde_json::json;
 use tokio::time::sleep;
 
-pub enum Command { Come, Leave }
+pub enum Command { Come, Leave, Info }
 
 pub struct Runner<'r> {
     client: Client,
@@ -50,6 +50,7 @@ impl<'r> Runner<'r> {
         match command {
             Command::Come => self.ensure_came().await?,
             Command::Leave => self.ensure_left().await?,
+            Command::Info => self.show_last_booking().await?,
         }
         self.client.close().await?;
         Ok(())
@@ -73,33 +74,48 @@ impl<'r> Runner<'r> {
     }
 
     async fn open_timetracking(&self) -> Result<(), CmdError> {
-        self.get_nav_link("- Zeiterfassung").await?.click().await?;
+        self.get_nav_link("- Zeiterfassung").await?.click().await
+    }
+
+    async fn open_timetracking_dialog(&self) -> Result<Element, CmdError> {
         self.client.find(Locator::Id("zeiterfassungdetailscontainer")).await?
             .find(Locator::Css("button")).await?
             .click().await?;
         sleep(Duration::from_secs(3)).await; // The dialog opens very slowly
-        Ok(())
+        self.client.find(Locator::Id("kugDialog")).await
     }
 
     async fn ensure_left(&self) -> Result<(), CmdError> {
-        let gehen = self.client.find(Locator::Id("kugDialog")).await?
+        let gehen = self.open_timetracking_dialog().await?
             .find(Locator::Css("input.buttonGehen")).await;
         if gehen.is_err() {
-            debug!("Could not find Leave button, therefore already left.");
+            debug!("Could not find \"Leave\". This should mean the user has already left.");
+            info!("Already left.");
             return Ok(());
         }
-        debug!("Successfully logged left");
+        info!("Successfully logged Gehen");
         gehen?.click().await
     }
 
     async fn ensure_came(&self) -> Result<(), CmdError> {
-        let kommen = self.client.find(Locator::Id("kugDialog")).await?
+        let kommen = self.open_timetracking_dialog().await?
             .find(Locator::Css("input.buttonKommen")).await;
+
         if kommen.is_err() {
-            debug!("Could not find 'Kommen', therefore already went");
+            debug!("Could not find \"Kommen\". This should mean the user has already came.");
+            info!("Already came.");
             return Ok(());
         }
+        info!("Successfully logged Kommen");
         kommen?.click().await
+    }
+
+    async fn show_last_booking(&self) -> Result<(), CmdError> {
+        let text = self.client.find(Locator::Id("zeiterfassungdetailscontainer")).await?
+            .find(Locator::Css("p")).await?
+            .text().await;
+        println!("{}", text.unwrap_or("There is no content for last booking.".to_string()));
+        Ok(())
     }
 
     async fn get_nav_link(&self, link_text: &str) -> Result<Element, CmdError> {
