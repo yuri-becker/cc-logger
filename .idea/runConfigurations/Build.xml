@@ -1,7 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Come" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-    <option name="buildProfileId" value="dev" />
-    <option name="command" value="run --package cc-logger --bin cc-logger come" />
+  <configuration default="false" name="Build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" nameIsGenerated="true">
+    <option name="command" value="build" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <envs />
     <option name="emulateTerminal" value="true" />
@@ -13,8 +12,6 @@
     <option name="backtrace" value="SHORT" />
     <option name="isRedirectInput" value="false" />
     <option name="redirectInputPath" value="" />
-    <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build" run_configuration_type="CargoCommandRunConfiguration" />
-    </method>
+    <method v="2" />
   </configuration>
 </component>

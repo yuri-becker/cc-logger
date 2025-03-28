@@ -35,7 +35,7 @@ impl<'r> Runner<'r> {
 
         if let Some(range_minutes) = config.random_sleep_range_minutes {
             let range_seconds: u16 = (range_minutes as u16) * 60;
-            let sleep_seconds = rand::thread_rng().gen_range(0..=range_seconds);
+            let sleep_seconds = rand::rng().random_range(0..=range_seconds);
             debug!("Sleeping for {} seconds.", sleep_seconds);
             sleep(Duration::from_secs(sleep_seconds as u64)).await;
         }
@@ -119,8 +119,6 @@ impl<'r> Runner<'r> {
     }
 
     async fn get_nav_link(&self, link_text: &str) -> Result<Element, CmdError> {
-        let nav = self.client.find(Locator::Id("nav")).await?;
-        nav.find(Locator::Css(".left-navi")).await?
-            .find(Locator::LinkText(link_text)).await
+        self.client.wait().for_element(Locator::LinkText(link_text)).await
     }
 }
